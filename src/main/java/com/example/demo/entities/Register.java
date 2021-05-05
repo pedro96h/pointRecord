@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import com.example.demo.entities.enums.RegisterStatus;
+
 @Entity
 public class Register implements Serializable {
 
@@ -28,7 +30,8 @@ public class Register implements Serializable {
 	private LocalTime point2;
 	private LocalTime point3;
 	private LocalTime point4;
-		
+	private RegisterStatus registerStatus;
+	
 	public Register() {
 	}
 	
@@ -42,6 +45,7 @@ public class Register implements Serializable {
 		this.point2 = point2;
 		this.point3 = point3;
 		this.point4 = point4;
+		this.registerStatus = RegisterStatus.valueOf(1);
 	}
 
 	public Long getId() {
@@ -100,6 +104,14 @@ public class Register implements Serializable {
 		this.point4 = point4;
 	}
 	
+	public RegisterStatus getRegisterStatus() {
+		return registerStatus;
+	}
+
+	public void setRegisterStatus(RegisterStatus registerStatus) {
+		this.registerStatus = registerStatus;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
