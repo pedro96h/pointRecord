@@ -33,10 +33,12 @@ public class Register implements Serializable {
 	private RegisterStatus registerStatus;
 	
 	public Register() {
+		this.day = LocalDate.now();
+		this.registerStatus = RegisterStatus.NONE;
 	}
 	
 	public Register(Long id, User user, LocalDate day, LocalTime point1, LocalTime point2, LocalTime point3,
-			LocalTime point4) {
+			LocalTime point4,RegisterStatus registerStatus) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -45,7 +47,7 @@ public class Register implements Serializable {
 		this.point2 = point2;
 		this.point3 = point3;
 		this.point4 = point4;
-		this.registerStatus = RegisterStatus.valueOf(1);
+		this.registerStatus = registerStatus;
 	}
 
 	public Long getId() {
