@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.entities.Register;
 import com.example.demo.entities.User;
+import com.example.demo.externalAgent.Company1;
+import com.example.demo.interfaces.CheckPointRules;
 import com.example.demo.repositories.RegisterRepository;
 import com.example.demo.servicies.exception.ResourceNotFoundException;
 
@@ -37,7 +39,9 @@ public class RegisterService {
 	}
 	
 	private Register pointRecord (Optional<Register> optRegister,User user) {
-		
-		return null;
+		Register register = optRegister.orElse(new Register());
+		CheckPointRules checkPointRules = new Company1();
+		checkPointRules.validateCheckPoint(register,user);
+		return registerRepository.save(checkPointRules.checkPoint(register, user));
 	}
 }
