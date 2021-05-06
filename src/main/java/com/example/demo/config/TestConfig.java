@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.example.demo.entities.Register;
 import com.example.demo.entities.User;
+import com.example.demo.entities.enums.RegisterStatus;
 import com.example.demo.repositories.RegisterRepository;
 import com.example.demo.repositories.UserRepository;
 
@@ -33,9 +34,10 @@ public class TestConfig implements CommandLineRunner {
 		
 		userRepository.saveAll(Arrays.asList(u1,u2,u3));
 		
-		Register r1 = new Register(1L, u1, LocalDate.now(), LocalTime.now(), null, null, null);
-		Register r2 = new Register(2L, u2, LocalDate.now(), LocalTime.now(), LocalTime.now().plusHours(1), null, null);
+		Register r1 = new Register(1L, u1, LocalDate.now(), LocalTime.now(), null, null, null,RegisterStatus.FIRST);
+		Register r2 = new Register(2L, u2, LocalDate.now(), LocalTime.now(), LocalTime.now().plusHours(1), null, null,RegisterStatus.SECOND);
+		Register r3 = new Register(3L, u3, LocalDate.now(), LocalTime.now(), LocalTime.now().plusHours(4), LocalTime.now().plusHours(5), null,RegisterStatus.THIRD);
 		
-		registerRepository.saveAll(Arrays.asList(r1,r2));
+		registerRepository.saveAll(Arrays.asList(r1,r2,r3));
 	}
 }
