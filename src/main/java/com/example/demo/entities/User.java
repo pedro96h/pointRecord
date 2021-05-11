@@ -19,7 +19,7 @@ public class User implements Serializable {
 	private String name;
 	@Column(unique = true)
 	private String cpf;
-	
+
 	public User() {
 	}
 

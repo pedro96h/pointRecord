@@ -18,7 +18,7 @@ import com.example.demo.entities.enums.RegisterStatus;
 public class Register implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -31,14 +31,16 @@ public class Register implements Serializable {
 	private LocalTime point3;
 	private LocalTime point4;
 	private RegisterStatus registerStatus;
-	
+	private Long timeRecord;
+
 	public Register() {
 		this.day = LocalDate.now();
 		this.registerStatus = RegisterStatus.NONE;
+		this.timeRecord = 0L;
 	}
-	
+
 	public Register(Long id, User user, LocalDate day, LocalTime point1, LocalTime point2, LocalTime point3,
-			LocalTime point4,RegisterStatus registerStatus) {
+			LocalTime point4, RegisterStatus registerStatus, Long timeRecord) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -48,70 +50,79 @@ public class Register implements Serializable {
 		this.point3 = point3;
 		this.point4 = point4;
 		this.registerStatus = registerStatus;
+		this.timeRecord = timeRecord;
 	}
 
 	public Long getId() {
 		return id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public User getUser() {
 		return user;
 	}
-	
+
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
 	public LocalDate getDay() {
 		return day;
 	}
-	
+
 	public void setDay(LocalDate day) {
 		this.day = day;
 	}
-	
+
 	public LocalTime getPoint1() {
 		return point1;
 	}
-	
+
 	public void setPoint1(LocalTime point1) {
 		this.point1 = point1;
 	}
-	
+
 	public LocalTime getPoint2() {
 		return point2;
 	}
-	
+
 	public void setPoint2(LocalTime point2) {
 		this.point2 = point2;
 	}
-	
+
 	public LocalTime getPoint3() {
 		return point3;
 	}
-	
+
 	public void setPoint3(LocalTime point3) {
 		this.point3 = point3;
 	}
-	
+
 	public LocalTime getPoint4() {
 		return point4;
 	}
-	
+
 	public void setPoint4(LocalTime point4) {
 		this.point4 = point4;
 	}
-	
+
 	public RegisterStatus getRegisterStatus() {
 		return registerStatus;
 	}
 
 	public void setRegisterStatus(RegisterStatus registerStatus) {
 		this.registerStatus = registerStatus;
+	}
+
+	public Long getTimeRecord() {
+		return timeRecord;
+	}
+
+	public void setTimeRecord(Long timeRecord) {
+		this.timeRecord = timeRecord;
 	}
 
 	@Override
@@ -121,7 +132,7 @@ public class Register implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -137,5 +148,20 @@ public class Register implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public static void addRegister(Register register, User user) {
+		if (register.getRegisterStatus().equals(RegisterStatus.NONE)) {
+			register.setDay(LocalDate.now());
+			register.setPoint1(LocalTime.now());
+			register.setUser(user);
+		} else if (register.getRegisterStatus().equals(RegisterStatus.FIRST)) {
+			register.setPoint2(LocalTime.now());
+		} else if (register.getRegisterStatus().equals(RegisterStatus.SECOND)) {
+			register.setPoint3(LocalTime.now());
+		} else {
+			register.setPoint4(LocalTime.now());
+		}
+		register.setRegisterStatus(RegisterStatus.valueOf(register.getRegisterStatus().ordinal() + 1));
 	}
 }

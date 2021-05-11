@@ -13,4 +13,7 @@ import com.example.demo.entities.User;
 public interface RegisterRepository extends JpaRepository<Register, Long> {
 
 	Optional<Register> findByUserAndDay(User user, LocalDate date);
+	
+//	SELECT SUM(TIME_RECORD) FROM REGISTER WHERE MONTH(DAY) = 05 AND YEAR(DAY) = 2021
+//			AND USER_ID = 3
 }

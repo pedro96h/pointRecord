@@ -19,29 +19,29 @@ public class RegisterService {
 
 	@Autowired
 	RegisterRepository registerRepository;
-	
+
 	@Autowired
 	UserService userService;
-	
-	public List<Register> findAll(){
+
+	public List<Register> findAll() {
 		return registerRepository.findAll();
 	}
-	
+
 	public Register findById(Long id) {
 		Optional<Register> register = registerRepository.findById(id);
-		return register.orElseThrow(()-> new ResourceNotFoundException(id));		
+		return register.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
 	public Register checkPoint(Long id) {
-		User  user = userService.findById(id);
+		User user = userService.findById(id);
 		Optional<Register> register = registerRepository.findByUserAndDay(user, LocalDate.now());
-		return pointRecord(register,user);
+		return pointRecord(register, user);
 	}
-	
-	private Register pointRecord (Optional<Register> optRegister,User user) {
+
+	private Register pointRecord(Optional<Register> optRegister, User user) {
 		Register register = optRegister.orElse(new Register());
 		CheckPointRules checkPointRules = new Company1();
-		checkPointRules.validateCheckPoint(register,user);
+		checkPointRules.validateCheckPoint(register, user);
 		return registerRepository.save(checkPointRules.checkPoint(register, user));
 	}
 }

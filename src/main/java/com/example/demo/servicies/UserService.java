@@ -20,14 +20,14 @@ public class UserService {
 
 	@Autowired
 	UserRepository userRepository;
-	
-	public List<User> findAll(){
+
+	public List<User> findAll() {
 		return userRepository.findAll();
 	}
-	
+
 	public User findById(Long id) {
 		Optional<User> user = userRepository.findById(id);
-		return user.orElseThrow(()-> new ResourceNotFoundException(id));		
+		return user.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
 	public User addUser(User user) {
@@ -40,7 +40,7 @@ public class UserService {
 
 	public void delete(Long id) {
 		try {
-			userRepository.deleteById(id);	
+			userRepository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException(id);
 		}
@@ -49,16 +49,16 @@ public class UserService {
 	public User update(Long id, User user) {
 		try {
 			User entity = userRepository.getOne(id);
-			updateData(entity,user);
-			return userRepository.save(entity);	
-		} catch(EntityNotFoundException e) {
+			updateData(entity, user);
+			return userRepository.save(entity);
+		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
 		}
 	}
-	
+
 	private void updateData(User entity, User obj) {
 		entity.setName(obj.getName());
 		entity.setCpf(obj.getCpf());
 	}
-	
+
 }

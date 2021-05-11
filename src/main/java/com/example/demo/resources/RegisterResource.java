@@ -19,23 +19,23 @@ public class RegisterResource {
 
 	@Autowired
 	private RegisterService registerService;
-	
+
 	@GetMapping
-	public ResponseEntity<List<Register>> findAll(){
+	public ResponseEntity<List<Register>> findAll() {
 		List<Register> list = registerService.findAll();
 		return ResponseEntity.ok().body(list);
 	}
-	
+
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Register> findById(@PathVariable Long id){
+	public ResponseEntity<Register> findById(@PathVariable Long id) {
 		Register register = registerService.findById(id);
 		return ResponseEntity.ok().body(register);
 	}
-	
+
 	@PostMapping(value = "/checkpoint/{userId}")
 	public ResponseEntity<Register> checkPoint(@PathVariable Long userId) {
 		Register register = registerService.checkPoint(userId);
 		return ResponseEntity.ok().body(register);
 	}
-	
+
 }
