@@ -1,12 +1,17 @@
 package com.example.demo.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class User implements Serializable {
@@ -19,6 +24,8 @@ public class User implements Serializable {
 	private String name;
 	@Column(unique = true)
 	private String cpf;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Register> registes = new ArrayList<>();
 
 	public User() {
 	}
@@ -51,6 +58,10 @@ public class User implements Serializable {
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+
+	public List<Register> getRegistes() {
+		return registes;
 	}
 
 	@Override

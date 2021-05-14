@@ -38,4 +38,11 @@ public class RegisterResource {
 		return ResponseEntity.ok().body(register);
 	}
 
+	@GetMapping(value = "getTotalWorkloadTime/{month}/{year}/{userId}")
+	public ResponseEntity<String> getTotalWorkloadTime(@PathVariable Long month , @PathVariable Long year,
+			@PathVariable Long userId) {
+		String totalTime = registerService.getTotalWorkloadTime(month,year,userId);
+		return ResponseEntity.ok().body(totalTime);
+	}
+
 }

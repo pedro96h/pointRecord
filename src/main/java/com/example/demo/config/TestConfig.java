@@ -38,9 +38,9 @@ public class TestConfig implements CommandLineRunner {
 				RegisterStatus.FIRST, 0L);
 		Register r2 = new Register(2L, u2, LocalDate.now(), LocalTime.now(), LocalTime.now().plusHours(1), null, null,
 				RegisterStatus.SECOND, -400L);
-//		Register r3 = new Register(3L, u3, LocalDate.now(), LocalTime.now().plusHours(-10), LocalTime.now().plusHours(-6), LocalTime.now().plusHours(-5), null,RegisterStatus.THIRD,-240L);
+		Register r3 = new Register(3L, u3, LocalDate.now(), LocalTime.now().plusHours(-10),
+				LocalTime.now().plusHours(-6), LocalTime.now().plusHours(-5), null, RegisterStatus.THIRD, -240L);
 
-		registerRepository.saveAll(Arrays.asList(r1, r2));
-//		registerRepository.saveAll(Arrays.asList(r1,r2,r3));
+		registerRepository.saveAll(Arrays.asList(r1, r2, r3));
 	}
 }

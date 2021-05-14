@@ -5,7 +5,6 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.Period;
 
 import com.example.demo.entities.Register;
 import com.example.demo.entities.User;

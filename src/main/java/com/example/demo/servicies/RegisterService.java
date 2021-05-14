@@ -13,6 +13,7 @@ import com.example.demo.externalAgent.Company1;
 import com.example.demo.interfaces.CheckPointRules;
 import com.example.demo.repositories.RegisterRepository;
 import com.example.demo.servicies.exception.ResourceNotFoundException;
+import com.example.demo.servicies.exception.ValidationTotalWorkloadTime;
 
 @Service
 public class RegisterService {
@@ -43,5 +44,17 @@ public class RegisterService {
 		CheckPointRules checkPointRules = new Company1();
 		checkPointRules.validateCheckPoint(register, user);
 		return registerRepository.save(checkPointRules.checkPoint(register, user));
+	}
+
+	public String getTotalWorkloadTime(Long month, Long year, Long userId) {
+		ValidationTotalWorkloadTime.validate(month, year);
+		User user = userService.findById(userId);
+		Long totalTime = registerRepository.getTotalWorkloadTime(month.intValue(), year.intValue(), user);
+
+		Long hh = totalTime / 60;
+		Long mm = totalTime % 60;
+
+		String response = "hours balance : " + hh.toString() + ":" + Integer.toString((int) Math.abs(mm));
+		return response;
 	}
 }

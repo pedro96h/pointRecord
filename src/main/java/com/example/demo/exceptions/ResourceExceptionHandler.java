@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.example.demo.servicies.exception.DatabaseConstraintViolationException;
+import com.example.demo.servicies.exception.NullPointException;
 import com.example.demo.servicies.exception.ResourceNotFoundException;
+import com.example.demo.servicies.exception.TotalWorkloadException;
 import com.example.demo.servicies.exception.ValidationErrorException;
 
 @ControllerAdvice
@@ -40,6 +42,24 @@ public class ResourceExceptionHandler {
 			HttpServletRequest request) {
 		String error = "Check violation exception";
 		HttpStatus status = HttpStatus.NOT_ACCEPTABLE;
+		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(),
+				request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+
+	@ExceptionHandler(TotalWorkloadException.class)
+	public ResponseEntity<StandardError> TotalWorkloadException(TotalWorkloadException e, HttpServletRequest request) {
+		String error = "invalid input date";
+		HttpStatus status = HttpStatus.NOT_ACCEPTABLE;
+		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(),
+				request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+
+	@ExceptionHandler(NullPointException.class)
+	public ResponseEntity<StandardError> NullPointException(NullPointException e, HttpServletRequest request) {
+		String error = "invalid input date";
+		HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
 		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(),
 				request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
